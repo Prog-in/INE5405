@@ -7,34 +7,66 @@ movies <- read_csv("../resources/data.csv")
 
 movies$title_length <- nchar(movies$title)
 
-quartile_breaks_dec <- quantile(movies$title_length, probs = c(0, 0.25, 0.5, 0.75, 1), na.rm = TRUE)
 
-rounded_quartile_breaks <- unique(round(quartile_breaks_dec))
+# --- CRIAÇÃO DOS INTERVALOS CUSTOMIZADOS (LARGURA 5) ---
 
-labels <- c()
-labels[1] <- paste0(rounded_quartile_breaks[1], " - ", rounded_quartile_breaks[2])
-for (i in 2:(length(rounded_quartile_breaks) - 1)) {
-  start <- rounded_quartile_breaks[i] + 1
-  end <- rounded_quartile_breaks[i+1]
-  labels <- c(labels, paste0(start, " - ", end))
+# 1. Encontrar o valor mínimo e máximo para os limites
+min_len <- min(movies$title_length, na.rm = TRUE)
+max_len <- max(movies$title_length, na.rm = TRUE)
+
+# 2. Criar os pontos de corte para os primeiros 8 intervalos de 5 em 5
+# Começamos do mínimo e vamos somando 5, 8 vezes.
+# Isso nos dá os 9 primeiros pontos de corte.
+breaks_inicio <- floor(min_len) -1 + (0:8 * 5)
+
+# 3. Construir o vetor final de cortes: os 9 pontos iniciais + o valor máximo no final
+breaks <- c(breaks_inicio, max_len)
+breaks <- unique(breaks) # Garantir que não haja duplicatas
+breaks <- breaks[breaks <= max_len]
+if (tail(breaks, 1) < max_len) {
+  breaks <- c(breaks, max_len)
 }
 
-movies$title_class_quartile <- cut(movies$title_length, breaks = rounded_quartile_breaks,labels = labels, include.lowest = TRUE, right = TRUE)
+
+# 4. Criar os rótulos dinamicamente
+labels <- c()
+# Loop para criar os primeiros 8 rótulos
+num_intervalos_fixos <- length(breaks) - 2
+for (i in 1:num_intervalos_fixos) {
+  start <- breaks[i] + 1
+  end <- breaks[i+1]
+  labels <- c(labels, paste0(start, "-", end))
+}
+# Adicionar o rótulo final para o restante
+start_final <- breaks[length(breaks)-1] + 1
+labels <- c(labels, paste0(start_final, "+"))
 
 
-bar_chart_final <- ggplot(data = movies, aes(x = title_class_quartile, fill = title_class_quartile)) +
+# 5. Criar a nova coluna de classes
+movies$title_class_custom_5 <- cut(movies$title_length,
+                                   breaks = breaks,
+                                   labels = labels,
+                                   include.lowest = TRUE,
+                                   right = TRUE)
+
+
+# --- GRÁFICO DE BARRAS COM OS NOVOS INTERVALOS ---
+
+bar_chart_custom_5 <- ggplot(data = movies, aes(x = title_class_custom_5, fill = title_class_custom_5)) +
   geom_bar(show.legend = FALSE) +
-  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, size = 4) +
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, size = 3.5) +
   labs(
     title = "Distribuição de Filmes por Tamanho do Título",
     x = "Tamanho do Título (em caracteres)",
     y = "Número de Filmes"
   ) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 12) +
   theme(
     plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5)
+    plot.subtitle = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 45, hjust = 1)
   )
 
-print(bar_chart_final)
-ggsave("titulo_contagem_caracteres.png", plot = bar_chart_final, width = 10, height = 7)
+print(bar_chart_custom_5)
+
+ggsave("titulo_contagem_caracteres.png", plot = bar_chart_custom_5, width = 14, height = 8)

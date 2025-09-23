@@ -26,11 +26,10 @@ lancamentos_por_decada_plot <- ggplot(data = movies_por_decada, aes(x = decada_l
   geom_text(aes(label = n), vjust = -0.5, size = 4) +
   labs(
     title = "Número de Filmes Lançados por Década",
-    subtitle = "A produção cresce exponencialmente nas décadas mais recentes do dataset",
     x = "Década",
     y = "Número de Filmes Lançados"
   ) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 18) +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
 
 print(lancamentos_por_decada_plot)

@@ -19,11 +19,10 @@ lancamentos_por_ano_plot <- ggplot(data = movies_por_ano, aes(x = ano_lancamento
   coord_cartesian(xlim = c(NA, 2024), expand = FALSE) +
   labs(
     title = "Evolução do Número de Lançamentos de Filmes por Ano",
-    subtitle = "Observa-se um crescimento expressivo a partir da década de 90",
     x = "Ano de Lançamento",
     y = "Número de Filmes Lançados"
   ) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 18) +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
 
 print(lancamentos_por_ano_plot)

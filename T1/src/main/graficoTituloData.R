@@ -16,7 +16,7 @@ movies_com_contagem <- movies %>%
   ) %>%
   filter(ano_lancamento > 1920 & ano_lancamento <= 2024)
 
--
+
 media_palavras_por_ano <- movies_com_contagem %>%
   group_by(ano_lancamento) %>%
   summarise(media_palavras = mean(word_count, na.rm = TRUE))
@@ -29,11 +29,10 @@ evolucao_palavras_plot <- ggplot(data = media_palavras_por_ano, aes(x = ano_lanc
   geom_smooth(method = "loess", se = FALSE, color = "orange", linetype = "dashed") +
   labs(
     title = "Evolução do Número Médio de Palavras nos Títulos de Filmes",
-    subtitle = "Análise da quantidade de palavras por título ao longo dos anos",
     x = "Ano de Lançamento",
     y = "Média de Palavras no Título"
   ) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 18) +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
 
 print(evolucao_palavras_plot)

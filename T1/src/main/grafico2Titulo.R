@@ -42,7 +42,7 @@ word_count_chart_horizontal <- ggplot(data = movies, aes(y = word_count_class, f
     x = "Número de Filmes",
     y = "Número de Palavras"
   ) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 18) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print(word_count_chart_horizontal)
