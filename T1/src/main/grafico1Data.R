@@ -3,7 +3,7 @@ library(ggplot2)
 library(dplyr)
 library(lubridate)
 
-movies <- read_csv("../resources/data.csv")
+movies <- read_csv("/home/lucas/INE5405/T1/src/resources/data.csv") # Está com o caminho absoluto pois estava dando algum bug na minha maquina
 
 
 movies_por_ano <- movies %>%
@@ -13,12 +13,10 @@ movies_por_ano <- movies %>%
   count(ano_lancamento)
 
 lancamentos_por_ano_plot <- ggplot(data = movies_por_ano, aes(x = ano_lancamento, y = n)) +
-  geom_line(color = "dodgerblue", size = 1) +
-  geom_point(color = "dodgerblue", size = 2) +
-  geom_smooth(method = "loess", se = FALSE, color = "tomato", linetype = "dashed") +
+  geom_line(size = 1, color = "grey30") +
+  geom_point(size = 2, color = "grey30") +
   coord_cartesian(xlim = c(NA, 2024), expand = FALSE) +
   labs(
-    title = "Evolução do Número de Lançamentos de Filmes por Ano",
     x = "Ano de Lançamento",
     y = "Número de Filmes Lançados"
   ) +

@@ -5,8 +5,7 @@ library(stringr)
 library(lubridate)
 
 
-movies <- read_csv("../resources/data.csv")
-
+movies <- read_csv("/home/lucas/INE5405/T1/src/resources/data.csv") # Está com o caminho absoluto pois estava dando algum bug na minha maquina
 
 movies_com_contagem <- movies %>%
   filter(!is.na(release_date) & !is.na(title)) %>%
@@ -24,11 +23,9 @@ media_palavras_por_ano <- movies_com_contagem %>%
 
 
 evolucao_palavras_plot <- ggplot(data = media_palavras_por_ano, aes(x = ano_lancamento, y = media_palavras)) +
-  geom_line(color = "purple", size = 1) +
-  geom_point(color = "purple", size = 2) +
-  geom_smooth(method = "loess", se = FALSE, color = "orange", linetype = "dashed") +
+  geom_line(size = 1, color = "grey30") +
+  geom_point(size = 2, color = "grey30") +
   labs(
-    title = "Evolução do Número Médio de Palavras nos Títulos de Filmes",
     x = "Ano de Lançamento",
     y = "Média de Palavras no Título"
   ) +

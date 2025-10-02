@@ -3,12 +3,9 @@ library(ggplot2)
 library(dplyr)
 library(stringr)
 
-movies <- read_csv("../resources/data.csv")
-
+movies <- read_csv("/home/lucas/INE5405/T1/src/resources/data.csv") # Está com o caminho absoluto pois estava dando algum bug na minha maquina
 
 movies$word_count <- str_count(movies$title, "\\S+")
-
-mean_words <- mean(movies$word_count, na.rm = TRUE)
 
 category_levels <- c(
   "1 palavra", "2 palavras", "3 palavras", "4 palavras", 
@@ -27,23 +24,19 @@ movies$word_count_class <- case_when(
 
 movies$word_count_class <- factor(movies$word_count_class, levels = category_levels)
 
+df_words <- movies %>%
+  count(word_count_class)
 
-word_count_chart_horizontal <- ggplot(data = movies, aes(y = word_count_class, fill = word_count_class)) +
-  geom_bar(show.legend = FALSE) +
-  geom_text(
-    stat = 'count', 
-    aes(label = ..count..), 
-    hjust = -0.2, 
-    size = 3.5
-  ) +
-  scale_y_discrete(limits = rev) +
+lollipop_chart <- ggplot(df_words, aes(x = n, y = word_count_class)) +
+  geom_segment(aes(x = 0, xend = n, y = word_count_class, yend = word_count_class),
+               linewidth = 1, color = "grey30") +
+  geom_point(size = 5, color = "grey30") +
+  geom_text(aes(label = n), hjust = -0.3, size = 4) +
+  theme_minimal(base_size = 16) +
   labs(
-    title = "Distribuição de Filmes por Número de Palavras no Título",
     x = "Número de Filmes",
     y = "Número de Palavras"
-  ) +
-  theme_minimal(base_size = 18) +
-  theme(plot.title = element_text(hjust = 0.5))
+  )
 
-print(word_count_chart_horizontal)
-ggsave("titulo_contagem_palavras.png", plot = word_count_chart_horizontal, width = 11, height = 7)
+print(lollipop_chart)
+ggsave("titulo_contagem_palavras.png", plot = lollipop_chart, width = 11, height = 7)
