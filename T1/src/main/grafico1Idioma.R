@@ -19,7 +19,7 @@ pizza_principal_dados <- data.frame(
 
 # Adiciona a coluna de porcentagem
 pizza_principal_dados$Porcentagem <- scales::percent(
-  pizza_principal_dados$Contagem / sum(pizza_principal_dados$Contagem), 
+  pizza_principal_dados$Contagem / sum(pizza_principal_dados$Contagem),
   accuracy = 0.1)
 
 # Gera o gráfico de pizza principal
@@ -27,8 +27,8 @@ ggplot(pizza_principal_dados, aes(x = "", y = Contagem, fill = Categoria)) +
   geom_bar(stat = "identity", width = 1, color = "white") +
   coord_polar("y", start = 0) +
   geom_text(aes(label = Porcentagem),
-      position = position_stack(vjust = 0.5), 
+      position = position_stack(vjust = 0.5),
       color = "white", size = 6) +
-  labs(title = "Proporção de Filmes: Inglês vs. Outros Idiomas") +
   theme_void() +
   scale_fill_manual(values=c("skyblue", "gray")) # Define cores manualmente
+

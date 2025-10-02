@@ -15,7 +15,7 @@ pizza_detalhada_dados <- rbind(top_5_nao_en, linha_outros)
 
 # Coluna de porcentagem
 pizza_detalhada_dados$Porcentagem <- scales::percent(
-  pizza_detalhada_dados$count / sum(pizza_detalhada_dados$count), 
+  pizza_detalhada_dados$count / sum(pizza_detalhada_dados$count),
   accuracy = 0.1)
 
 pizza_detalhada_dados$Idioma <- as.character(pizza_detalhada_dados$original_language)
@@ -37,11 +37,11 @@ pizza_detalhada_dados$Idioma_Descritivo <- ifelse(
 # Gráfico de rosca final
 ggplot(pizza_detalhada_dados, aes(x = 2, y = count, fill = reorder(Idioma_Descritivo, -count))) +
   geom_bar(stat = "identity", color = "white") +
-  geom_text(aes(label = Porcentagem), 
-            position = position_stack(vjust = 0.5), 
-            color = "white", 
+  geom_text(aes(label = Porcentagem),
+            position = position_stack(vjust = 0.5),
+            color = "white",
             size = 4) +
   coord_polar(theta = "y", start = 0) +
-  xlim(c(0.5, 2.5)) + 
-  labs(title = "Composição dos 'Outros Idiomas'", fill = "Idioma") +
+  xlim(c(0.5, 2.5)) +
+  labs(fill = "Idioma") +
   theme_void()
