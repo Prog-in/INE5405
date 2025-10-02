@@ -1,4 +1,4 @@
-library(UpSetR)
+if (!require(UpSetR)) install.packages("UpSetR")
 
 movies <- read.csv("../resources/data.csv")
 
@@ -23,5 +23,6 @@ upset(genre_matrix,
       order.by = "freq",
       text.scale = 2.5,
       mb.ratio = c(0.5, 0.5),
-      main.bar.color = "skyblue",
+      main.bar.color = "grey30",
       sets.bar.color = "grey30")
+
