@@ -1,3 +1,6 @@
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
 library(ggplot2)
 
 tabela_idiomas <- read.csv("../resources/data.csv")
@@ -28,7 +31,7 @@ ggplot(pizza_principal_dados, aes(x = "", y = Contagem, fill = Categoria)) +
   coord_polar("y", start = 0) +
   geom_text(aes(label = Porcentagem),
       position = position_stack(vjust = 0.5),
-      color = "white", size = 6) +
+      color = "white", size = 7) +
   theme_void() +
   scale_fill_manual(values=c("skyblue", "gray")) +
     theme(

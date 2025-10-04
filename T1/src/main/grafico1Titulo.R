@@ -1,13 +1,22 @@
+if (!requireNamespace("readr", quietly = TRUE)) {
+  install.packages("readr")
+}
 library(readr)
-library(ggplot2)
-library(dplyr)
-library(dplyr)
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
 library(ggplot2)
 
-movies <- read_csv("/home/lucas/INE5405/T1/src/resources/data.csv") # Está com o caminho absoluto pois estava dando algum bug na minha maquina
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  install.packages("dplyr")
+}
+library(dplyr)
+
+
+movies <- read_csv("../resources/data.csv")
 movies$title_length <- nchar(movies$title)
 
-# Criando intervalos de 5 caracteres
 max_len <- max(movies$title_length, na.rm = TRUE)
 breaks <- seq(0, max_len + 1, by = 5)
 labels <- paste0(breaks[-length(breaks)] + 1, "-", breaks[-1])
@@ -20,8 +29,8 @@ df_length <- movies %>%
 area_chart <- ggplot(df_length, aes(x = title_class, y = n, group = 1)) +
   geom_area(fill = "grey30", alpha = 0.5) +
   geom_point(size = 3, color = "grey30") +
-  geom_text(aes(label = n), vjust = -0.5, size = 3.5) +
-  theme_minimal(base_size = 14) +
+  geom_text(aes(label = n), vjust = -0.5, size = 7) +
+  theme_minimal(base_size = 20) +
   labs(
     x = "Tamanho do Título (em caracteres)",
     y = "Número de Filmes"

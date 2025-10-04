@@ -1,3 +1,6 @@
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
 library(ggplot2)
 
 tabela_idiomas <- read.csv("../resources/data.csv")

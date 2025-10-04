@@ -1,11 +1,28 @@
+if (!requireNamespace("readr", quietly = TRUE)) {
+  install.packages("readr")
+}
 library(readr)
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
 library(ggplot2)
+
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  install.packages("dplyr")
+}
 library(dplyr)
-library(stringr)
+
+if (!requireNamespace("lubridate", quietly = TRUE)) {
+  install.packages("lubridate")
+}
 library(lubridate)
 
+if (!requireNamespace("stringr", quietly = TRUE)) {
+  install.packages("stringr")
+}
 
-movies <- read_csv("/home/lucas/INE5405/T1/src/resources/data.csv") # Está com o caminho absoluto pois estava dando algum bug na minha maquina
+movies <- read_csv("../resources/data.csv")
 
 movies_com_contagem <- movies %>%
   filter(!is.na(release_date) & !is.na(title)) %>%
@@ -29,7 +46,7 @@ evolucao_palavras_plot <- ggplot(data = media_palavras_por_ano, aes(x = ano_lanc
     x = "Ano de Lançamento",
     y = "Média de Palavras no Título"
   ) +
-  theme_minimal(base_size = 18) +
+  theme_minimal(base_size = 20) +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
 
 print(evolucao_palavras_plot)
