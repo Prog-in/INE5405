@@ -40,13 +40,13 @@ ggplot(pizza_detalhada_dados, aes(x = 2, y = count, fill = reorder(Idioma_Descri
   geom_text(aes(label = Porcentagem),
             position = position_stack(vjust = 0.5),
             color = "white",
-            size = 4) +
+            size = 5.8) +
   coord_polar(theta = "y", start = 0) +
   xlim(c(0.5, 2.5)) +
   labs(fill = "Idioma") +
   theme_void() +
     theme(
-        legend.title = element_text(size = 14), # Altera o tamanho do TÍTULO "Idioma"
-        legend.text = element_text(size = 12)   # Altera o tamanho dos ITENS (Francês (fr), etc.)
+        legend.title = element_text(size = 17), # Altera o tamanho do TÍTULO "Idioma"
+        legend.text = element_text(size = 15)   # Altera o tamanho dos ITENS (Francês (fr), etc.)
     )
 
