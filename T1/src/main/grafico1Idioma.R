@@ -30,5 +30,9 @@ ggplot(pizza_principal_dados, aes(x = "", y = Contagem, fill = Categoria)) +
       position = position_stack(vjust = 0.5),
       color = "white", size = 6) +
   theme_void() +
-  scale_fill_manual(values=c("skyblue", "gray")) # Define cores manualmente
+  scale_fill_manual(values=c("skyblue", "gray")) +
+    theme(
+        legend.title = element_text(size = 14),
+        legend.text = element_text(size = 12)
+    )
 
