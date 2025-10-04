@@ -44,4 +44,9 @@ ggplot(pizza_detalhada_dados, aes(x = 2, y = count, fill = reorder(Idioma_Descri
   coord_polar(theta = "y", start = 0) +
   xlim(c(0.5, 2.5)) +
   labs(fill = "Idioma") +
-  theme_void()
+  theme_void() +
+    theme(
+        legend.title = element_text(size = 14), # Altera o tamanho do TÍTULO "Idioma"
+        legend.text = element_text(size = 12)   # Altera o tamanho dos ITENS (Francês (fr), etc.)
+    )
+
