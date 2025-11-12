@@ -14,6 +14,8 @@ if (!requireNamespace("effects", quietly = TRUE)) { install.packages("effects") 
 library(effects)
 if (!requireNamespace("lmtest", quietly = TRUE)) { install.packages("lmtest") }
 library(lmtest)
+if (!requireNamespace("gplots", quietly = TRUE)) { install.packages("gplots") }
+library(gplots)
 
 # --- Preparação dos dados ---
 data <- read_csv("../resources/data.csv")
@@ -24,7 +26,6 @@ data <- data %>%
         str_detect(genre, regex("Horror", ignore_case = TRUE)),
         as.numeric(format(release_date, "%Y")) > 1980
     )
-
 data <- data %>%
     mutate(
         release_year = as.numeric(format(release_date, "%Y")),
@@ -42,7 +43,18 @@ cor_matrix <- cor(
 )
 
 # Visualização simples
-heatmap(cor_matrix, symm = TRUE, main = "Mapa de Calor das Correlações")
+#heatmap(cor_matrix, symm = TRUE, main = "Mapa de Calor das Correlações", key = TRUE)
+heatmap.2(
+    cor_matrix,
+    symm = TRUE,
+    trace = "none",
+    col = colorRampPalette(c("white", "yellow", "orange", "brown"))(200),
+    main = "Mapa de Calor das Correlações",
+    key = TRUE,
+    key.title = "Correlação",
+    key.xlab = "Valor de r",
+    density.info = "none"
+)
 
 # --- Modelos inicial e completo ---
 MN <- lm(vote_average ~ 1, data = data)  # Modelo Nulo (apenas média)
@@ -76,8 +88,8 @@ r2_results <- cbind(nparr2, r2.aj, selr2$which)[order(r2.aj, decreasing = TRUE),
 print(r2_results[1:5, ])  # Mostra os 5 melhores modelos
 
 # --- Multicolinearidade ---
-cat("\n### VIF - Fator de Inflação da Variância ###\n")
-print(vif(step_backward_AIC))
+#cat("\n### VIF - Fator de Inflação da Variância ###\n")
+#print(vif(step_backward_AIC))
 
 # Teste de Normalidade dos Resíduos
 # Teste de Shapiro-Wilk. H0: Os resíduos seguem uma distribuição Normal
@@ -96,7 +108,7 @@ print(durbinWatsonTest(step_backward_AIC))
 
 # --- Diagnóstico Gráfico ---
 par(mfrow = c(2, 2))
-plot(MC)
+plot(step_backward_AIC)
 par(mfrow = c(1, 1))
 
 # --- Efeitos Parciais ---
