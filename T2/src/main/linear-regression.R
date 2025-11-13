@@ -131,14 +131,10 @@ hist(residuals(step_backward_AIC))
 #plot(predict(step_backward_AIC),residuals(step_backward_AIC),pch=19)
 par(mfrow = c(1, 1))
 
-# --- Teste de Hipótese (Conjunta - Igualdade) ---
-cat("\n### Teste de Hipótese: H0: O efeito da Popularidade (log) é igual ao efeito da Contagem de Votos (log) ###\n")
-# H0: beta_popularity - beta_vote_count = 0
+cat("\n### TESTES DE HIPÓTESE: H0: Coeficientes são iguais a zero ###\n")
+linearHypothesis(step_backward_AIC, "(Intercept) = 0")
+linearHypothesis(step_backward_AIC, "popularity = 0")
+linearHypothesis(step_backward_AIC, "vote_count = 0")
+linearHypothesis(step_backward_AIC, "release_year = 0")
+linearHypothesis(step_backward_AIC, "title_char_count = 0")
 
-#teste_hip <- linearHypothesis(
-#    step_backward_AIC,
-#    hypothesis.matrix = "popularity - vote_count = 0"
-#)
-teste_hip <- linearHypothesis(step_backward_AIC,
-                 c("vote_count = 0", "release_year = 0"))
-print(teste_hip)
