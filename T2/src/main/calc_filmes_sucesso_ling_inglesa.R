@@ -1,5 +1,5 @@
 # 1. Carregar os dados (como no seu código original)
-dados <- read.csv("top10K-TMDB-movies.csv")
+dados <- read.csv("../resources/data.csv")
 
 # 2. Filtrar os dados para incluir apenas filmes em inglês
 # Assumimos que a coluna de idioma se chama 'original_language' 
