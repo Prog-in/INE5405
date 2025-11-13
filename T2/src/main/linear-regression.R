@@ -135,8 +135,10 @@ par(mfrow = c(1, 1))
 cat("\n### Teste de Hipótese: H0: O efeito da Popularidade (log) é igual ao efeito da Contagem de Votos (log) ###\n")
 # H0: beta_popularity - beta_vote_count = 0
 
-teste_hip <- linearHypothesis(
-    step_backward_AIC,
-    hypothesis.matrix = "popularity - vote_count = 0"
-)
+#teste_hip <- linearHypothesis(
+#    step_backward_AIC,
+#    hypothesis.matrix = "popularity - vote_count = 0"
+#)
+teste_hip <- linearHypothesis(step_backward_AIC,
+                 c("vote_count = 0", "release_year = 0"))
 print(teste_hip)
