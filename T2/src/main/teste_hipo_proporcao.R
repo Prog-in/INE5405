@@ -1,5 +1,5 @@
 # 1. Carregar os dados (Se ainda não estiverem carregados)
-dados <- read.csv("top10K-TMDB-movies.csv")
+dados <- read.csv("../resources/data.csv")
 
 # 2. Definir o valor da hipótese nula (H0)
 # (Baseado na sua observação dos filmes em inglês)
